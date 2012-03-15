@@ -5,6 +5,8 @@ class Game < ActiveRecord::Base
   before_create :fetch_game_attributes
   before_destroy :subtract_player_points
   validates_uniqueness_of :url
+  belongs_to :home, :class_name => 'Team'
+  belongs_to :away, :class_name => 'Team'
 
   def fetch_game_attributes
     http_response = Net::HTTP.get_response(URI.parse(self.url))
@@ -13,6 +15,7 @@ class Game < ActiveRecord::Base
     raise "ERROR: GAME IS NOT A FINAL" unless response.css('#ysp-reg-box-line_score .final').length > 0
     away_team = response.search("#ysp-reg-box-header .hd h4 a").first.to_html
     home_team = response.search("#ysp-reg-box-header .hd h4 a").last.to_html
+    puts "away_team: #{away_team.match(/teams\/(.*)\"/)[1]} away2: #{away_team.match(/\">(.*)<\/a>/)[1]}"
     self.away = Team.find_or_create_by_code(:code => away_team.match(/teams\/(.*)\"/)[1], :name => away_team.match(/\">(.*)<\/a>/)[1])
     self.home = Team.find_or_create_by_code(:code => home_team.match(/teams\/(.*)\"/)[1], :name => home_team.match(/\">(.*)<\/a>/)[1])
     away_points = 0
