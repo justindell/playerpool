@@ -3,15 +3,17 @@
 %table
   %tr
     %th Home
+    %th
     %th Away
+    %th
     %th
     %th
     %th
 
   - @games.each do |game|
     %tr
-      %td= game.home
-      %td= game.away
+      %td{:class => (game.home.eliminated? ? 'eliminated' : nil)}= game.home
+      %td{:class => (game.away.eliminated? ? 'eliminated' : nil)}= game.away
       %td= link_to 'Show', game
       %td= link_to 'Edit', edit_game_path(game)
       %td= link_to 'Destroy', game, :confirm => 'Are you sure?', :method => :delete
