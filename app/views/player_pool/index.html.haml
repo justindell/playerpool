@@ -12,3 +12,5 @@
 %br
 
 = link_to "Upload Game", new_game_path
+%br
+= link_to "Refresh Today's Games", refresh_path(:date => Date.today.to_s)

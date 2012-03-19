@@ -10,24 +10,33 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120315061600) do
+ActiveRecord::Schema.define(:version => 20120319014638) do
 
-  create_table "games", :force => true do |t|
-    t.string   "url"
+  create_table "boxscores", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "game_id"
+    t.integer  "points"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "home_id"
-    t.integer  "away_id"
+  end
+
+  add_index "boxscores", ["player_id"], :name => "index_boxscores_on_player_id"
+
+  create_table "games", :force => true do |t|
+    t.string    "url"
+    t.timestamp "created_at"
+    t.timestamp "updated_at"
+    t.integer   "home_id"
+    t.integer   "away_id"
   end
 
   create_table "players", :force => true do |t|
-    t.integer   "team_id"
-    t.string    "first_name"
-    t.string    "last_name"
-    t.integer   "points",     :default => 0
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.integer   "yahoo_id"
+    t.integer  "team_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "yahoo_id"
   end
 
   create_table "players_users", :id => false, :force => true do |t|
