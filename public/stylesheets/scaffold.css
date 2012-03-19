@@ -59,3 +59,7 @@ div.field, div.actions {
   color: red;
   text-decoration: line-through;
 }
+
+#last_refresh {
+  font-style: italic;
+}

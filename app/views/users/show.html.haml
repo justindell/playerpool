@@ -1,18 +1,16 @@
 %p#notice= notice
 
-%h2= "#{@user.full_name}: #{@user.total_points} points"
-
-%table
-  %tr
-    %th Name
-    %th Team
-    %th Points
-  - @user.players.each do |p|
-    %tr{:class => (p.eliminated? ? 'eliminated' : nil)}
-      %td= p.full_name
-      %td= p.team
-      %td= p.points
+#players
+  = render :partial => 'players'
 
 = link_to 'Edit', edit_user_path(@user)
 \|
 = link_to 'Back', users_path
+
+= javascript_tag do
+  $(document).ready( |
+    function(){ |
+      setInterval(function(){ |
+        $('#players').load("/refresh?date=#{Date.today.to_s}&user_id=#{@user.id}"); |
+      }, 30000); |
+    }); |

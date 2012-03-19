@@ -20,7 +20,12 @@ class PlayerPoolController < ApplicationController
       game.destroy if game && !game.is_final
       Game.create(:url => url) if game.nil? || game.destroyed?
     end
-    @users = User.includes(:players => [:boxscores, :team]).sort_by{|u| u.total_points}.reverse
-    render :partial => 'standings'
+    if params[:user_id]
+      @user = User.find(params[:user_id])
+      render :partial => 'users/players'
+    else
+      @users = User.includes(:players => [:boxscores, :team]).sort_by{|u| u.total_points}.reverse
+      render :partial => 'standings'
+    end
   end
 end
