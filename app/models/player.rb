@@ -18,6 +18,6 @@ class Player < ActiveRecord::Base
   end
 
   def points
-    boxscores.all.inject(0){|acc, box| acc + box.points}
+    boxscores.inject(0){|acc, box| acc + box.points}
   end
 end

@@ -1,16 +1,10 @@
-%table{:border => 1}
-  %tr
-    %th Name
-    %th Remaining
-    %th Total Points
-  - @users.each do |u|
-    %tr
-      %td= link_to u.full_name, u
-      %td= u.players_remaining
-      %td= u.total_points
+#standings
+  = render :partial => 'standings'
 
-%br
-
-= link_to "Upload Game", new_game_path
-%br
-= link_to "Refresh Today's Games", refresh_path(:date => Date.today.to_s)
+= javascript_tag do
+  $(document).ready( |
+    function(){ |
+      setInterval(function(){ |
+        $('#standings').load("/refresh?date=#{Date.today.to_s}"); |
+      }, 30000); |
+    }); |

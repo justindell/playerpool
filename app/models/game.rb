@@ -9,6 +9,7 @@ class Game < ActiveRecord::Base
   has_many :boxscores, :dependent => :destroy
 
   def fetch_game_attributes
+    Rails.logger.info "fetching game attributes for #{self.url}"
     http_response = Net::HTTP.get_response(URI.parse(self.url))
     http_response = Net::HTTP.get_response(URI.parse(http_response['location'])) if http_response.is_a? Net::HTTPRedirection 
     raise "ERROR: HTTP RESPONSE STATUS NOT 200: #{http_response.code} - #{http_response.body}" if http_response.code != '200'
