@@ -34,6 +34,7 @@ class Game < ActiveRecord::Base
       self.boxscores << Boxscore.create!(:player => player, :points => p.search('td').last.inner_html.to_i)
     end
     if response.css('#ysp-reg-box-line_score .final').length > 0
+      self.is_final = true
       home_points > away_points ? self.away.update_attributes!(:eliminated => true) : self.home.update_attributes!(:eliminated => true)
     end
   end

@@ -14,8 +14,10 @@ class PlayerPoolController < ApplicationController
     doc = Nokogiri::HTML(http_response.body)
     doc.search('#ysp-leaguescoreboard table.ysptblclbg3').each do |game|
       link = game.search('table').last.search('.yspscores').last.search('a').first['href']
-      Game.destroy_all(:url => "http://rivals.yahoo.com/#{link}")
-      Game.create :url => "http://rivals.yahoo.com/#{link}"
+      url = "http://rivals.yahoo.com/#{link}"
+      game = Game.find_by_url url
+      game.destroy if game && !game.is_final
+      Game.create(:url => url) if game.nil? || game.destroyed?
     end
     redirect_to root_url
   end

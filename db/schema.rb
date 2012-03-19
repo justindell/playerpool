@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120319014638) do
+ActiveRecord::Schema.define(:version => 20120319141608) do
 
   create_table "boxscores", :force => true do |t|
     t.integer  "player_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20120319014638) do
     t.timestamp "updated_at"
     t.integer   "home_id"
     t.integer   "away_id"
+    t.boolean   "is_final"
   end
 
   create_table "players", :force => true do |t|
