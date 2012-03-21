@@ -60,6 +60,11 @@ div.field, div.actions {
   text-decoration: line-through;
 }
 
+.playing {
+  color: green;
+  text-decoration: bold;
+}
+
 #last_refresh {
   font-style: italic;
 }

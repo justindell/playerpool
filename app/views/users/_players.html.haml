@@ -6,7 +6,7 @@
     %th Team
     %th Points
   - @user.players.each do |p|
-    %tr{:class => (p.eliminated? ? 'eliminated' : nil)}
+    %tr{:class => "#{p.eliminated? ? 'eliminated' : ''} #{p.playing? ? 'playing' : ''}"}
       %td= p.full_name
       %td= p.team
       %td= p.points

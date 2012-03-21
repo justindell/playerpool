@@ -13,6 +13,10 @@ class Player < ActiveRecord::Base
     team.eliminated
   end
 
+  def playing?
+    boxscores.any?{ |b| !b.game.is_final }
+  end
+
   def team_name
     team.to_s
   end
