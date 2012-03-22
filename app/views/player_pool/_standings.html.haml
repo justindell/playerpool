@@ -1,8 +1,10 @@
 %table{:border => 1}
-  %tr
-    %th Name
-    %th Remaining
-    %th Total Points
+  %thead
+    %tr
+      %th Name
+      %th Remaining
+      %th Total Points
+  %tbody
   - @users.each do |u|
     %tr
       %td= link_to u.full_name, u

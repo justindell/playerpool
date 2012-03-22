@@ -1,10 +1,4 @@
 #standings
   = render :partial => 'standings'
 
-= javascript_tag do
-  $(document).ready( |
-    function(){ |
-      setInterval(function(){ |
-        $('#standings').load("/refresh?date=#{Date.today.to_s}"); |
-      }, 30000); |
-    }); |
+= javascript_include_tag 'player_updater'
