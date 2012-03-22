@@ -10,6 +10,7 @@ $(document).ready(
         new_points = parseInt($('table tbody tr')[i].children[2].innerHTML)
         if(current_points[i] < new_points) {
           $($('table tbody tr')[i].children[2]).effect('highlight', 2000);
+          current_points[i] = new_points;
         }
       }
     }, 30000);
