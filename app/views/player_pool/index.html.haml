@@ -2,3 +2,6 @@
   = render :partial => 'standings'
 
 = javascript_include_tag 'player_updater'
+
+= javascript_tag do
+  $(document).ready(refresher("#{Date.today.to_s}"));

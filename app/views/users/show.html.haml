@@ -7,10 +7,7 @@
 \|
 = link_to 'Back', users_path
 
+= javascript_include_tag 'user_updater'
+
 = javascript_tag do
-  $(document).ready( |
-    function(){ |
-      setInterval(function(){ |
-        $('#players').load("/refresh?date=#{Date.today.to_s}&user_id=#{@user.id}"); |
-      }, 30000); |
-    }); |
+  $(document).ready(refresher("#{Date.today.to_s}", #{@user.id}));
