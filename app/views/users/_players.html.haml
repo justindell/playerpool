@@ -13,4 +13,4 @@
       %td= p.team
       %td= p.points
 
-%p#last_refresh= "Last refresh: #{Time.now.strftime("%I:%M:%S %p")}"
+%p#last_refresh= "Last refresh: #{(Time.now + 2.hours).strftime("%I:%M:%S %p")}"
