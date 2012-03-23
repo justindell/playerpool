@@ -41,4 +41,9 @@ namespace :data do
       end 
     end
   end
+
+  desc "refresh todays games"
+  task :refresh, :needs => :environment do
+    Refresher.refresh Date.today.to_s
+  end
 end
