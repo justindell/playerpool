@@ -4,7 +4,7 @@ require 'nokogiri'
 
 namespace :data do
   desc "load all teams"
-  task :load_teams, :needs => :environment do
+  task :load_teams => :environment do
     begin
       response = Net::HTTP.get_response(URI.parse("http://rivals.yahoo.com/ncaa/basketball/teams"))
       doc = Nokogiri::HTML(response.body)
@@ -21,7 +21,7 @@ namespace :data do
   end
 
   desc "load all players"
-  task :load_players, :needs => :environment do
+  task :load_players => :environment do
     Team.all.each do |team|
       begin
         puts "loading #{team}"
@@ -43,7 +43,7 @@ namespace :data do
   end
 
   desc "refresh todays games"
-  task :refresh, :needs => :environment do
+  task :refresh => :environment do
     Refresher.refresh Date.today.to_s
   end
 end
