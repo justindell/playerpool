@@ -23,12 +23,12 @@ ActiveRecord::Schema.define(:version => 20120319141608) do
   add_index "boxscores", ["player_id"], :name => "index_boxscores_on_player_id"
 
   create_table "games", :force => true do |t|
-    t.string    "url"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.integer   "home_id"
-    t.integer   "away_id"
-    t.boolean   "is_final"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "home_id"
+    t.integer  "away_id"
+    t.boolean  "is_final"
   end
 
   create_table "players", :force => true do |t|
@@ -46,18 +46,18 @@ ActiveRecord::Schema.define(:version => 20120319141608) do
   end
 
   create_table "teams", :force => true do |t|
-    t.string    "code"
-    t.string    "name"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
-    t.boolean   "eliminated", :default => false
+    t.string   "code"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "eliminated", :default => false
   end
 
   create_table "users", :force => true do |t|
-    t.string    "first_name"
-    t.string    "last_name"
-    t.timestamp "created_at"
-    t.timestamp "updated_at"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
