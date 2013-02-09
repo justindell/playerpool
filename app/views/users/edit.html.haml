@@ -21,11 +21,10 @@
 
 :javascript
   $(function() {
-    $.get("/players.xml", function(data) {
-      playerMap = {}
-      $(data).find('player').each(function(i,player) { 
-        player = $(player);
-        playerMap[player.find('full-name').text()] = player.find('id').text();
+    $.get("/players.json", function(data) {
+      playerMap = {};
+      $(data).each(function(i,player) {
+        playerMap[player.full_name] = player.id;
       })
       $('#player_name').typeahead({
         minLength: 3,

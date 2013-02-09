@@ -6,24 +6,21 @@
 
 :javascript
   $(function() {
-    $.ajax({
-      url: "/teams.xml",
-      dataType: "xml",
-      success: function(response){
-        var data = $("team", response).map(function() {
-          return {
-            value: $("name", this).text(),
-            id: $("id", this).text()
-          };
-        }).get();
-        $('#player_team').autocomplete({
-          source: data,
-          minLength: 1,
-          select: function(event, ui) {
-            $('#player_team_id').attr('value', ui.item.id); 
-          }
-        });
-      }
-    });
+    $.get("/teams.json", function(data) {
+      teamMap = {};
+      $(data).each(function(i,team) {
+        teamMap[team.name] = team.id
+      });
+      $('#player_team').typeahead({
+        minLength: 2,
+        source: function(query, process) {
+          process(Object.keys(teamMap));
+        },
+        updater: function(item) {
+          $('#player_team_id').val(teamMap[item]); 
+          return item;
+        }
+      });
+    })
   });
 
