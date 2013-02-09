@@ -1,4 +1,4 @@
-function refresher(refresh_date) {
+function player_refresher(refresh_date) {
   setInterval(function(){
     current_points = [];
     for(i=0;i<$('table tbody tr').length; i++) {

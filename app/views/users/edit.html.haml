@@ -2,43 +2,41 @@
 
 = render 'form'
 
-%hr
-
-%table
-  %tr
-    %th Name
-    %th Points
-  - @user.players.each do |p|
+%table.table
+  %thead
     %tr
-      %td= p.full_name
-      %td= p.points
+      %th Name
+      %th Points
+  %tbody
+    - @user.players.each do |p|
+      %tr
+        %td= p.full_name
+        %td= p.points
 
-= form_tag add_player_user_path(@user), :method => :post do
+= form_tag add_player_user_path(@user), :method => :post, :class => 'form-inline' do
   = hidden_field_tag :player_id
   = label_tag 'Player Name:'
-  = text_field_tag :player_name
-  = submit_tag 'Add'
+  = text_field_tag :player_name, nil, :class => 'span2'
+  %button.btn Add
 
 :javascript
   $(function() {
-    $.ajax({
-      url: "/players.xml",
-      dataType: "xml",
-      success: function(response){
-        var data = $("player", response).map(function() {
-          return {
-            value: $("full-name", this).text() + " (" + $("team-name", this).text() + ")",
-            id: $("id", this).text()
-          };
-        }).get();
-        $('#player_name').autocomplete({
-          source: data,
-          minLength: 1,
-          select: function(event, ui) {
-            $('#player_id').attr('value', ui.item.id); 
-          }
-        });
-      }
+    $.get("/players.xml", function(data) {
+      playerMap = {}
+      $(data).find('player').each(function(i,player) { 
+        player = $(player);
+        playerMap[player.find('full-name').text()] = player.find('id').text();
+      })
+      $('#player_name').typeahead({
+        minLength: 3,
+        source: function(query, process) {
+          process(Object.keys(playerMap));
+        },
+        updater: function(item) {
+          $('#player_id').val(playerMap[item]);
+          return item;
+        }
+      });
     });
   });
 

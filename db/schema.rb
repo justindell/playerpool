@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -16,16 +17,16 @@ ActiveRecord::Schema.define(:version => 20120319141608) do
     t.integer  "player_id"
     t.integer  "game_id"
     t.integer  "points"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   add_index "boxscores", ["player_id"], :name => "index_boxscores_on_player_id"
 
   create_table "games", :force => true do |t|
     t.string   "url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "home_id"
     t.integer  "away_id"
     t.boolean  "is_final"
@@ -35,8 +36,8 @@ ActiveRecord::Schema.define(:version => 20120319141608) do
     t.integer  "team_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "yahoo_id"
   end
 
@@ -48,16 +49,16 @@ ActiveRecord::Schema.define(:version => 20120319141608) do
   create_table "teams", :force => true do |t|
     t.string   "code"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.boolean  "eliminated", :default => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

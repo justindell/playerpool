@@ -1,4 +1,4 @@
-function refresher(refresh_date, user_id) {
+function user_refresher(refresh_date, user_id) {
   setInterval(function(){
     current_points = [];
     for(i=0;i<$('table tbody tr').length; i++) {
