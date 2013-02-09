@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209152808) do
+ActiveRecord::Schema.define(:version => 20130209222712) do
 
   create_table "boxscores", :force => true do |t|
     t.integer  "player_id"
@@ -31,6 +31,16 @@ ActiveRecord::Schema.define(:version => 20130209152808) do
     t.integer  "away_id"
     t.boolean  "is_final"
   end
+
+  create_table "messages", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "user_name"
+    t.text     "body"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
   create_table "players", :force => true do |t|
     t.integer  "team_id"

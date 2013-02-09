@@ -1,0 +1,21 @@
+%html
+  %head
+    %title Playerpool - Draft Room
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
+    = csrf_meta_tags
+  %body
+    .container-fluid
+      .row-fluid
+        #draft-window.span8
+          %p this is the draft window
+        #chat-window.span4
+          #chat-content
+            %ul#messages
+              - @messages.each do |message|
+                %li{:style => "color:#{color_for_user(message.user_id)}"}= "#{message.user_name}: #{message.body}"
+          #chat-input
+            = form_tag '/messages', :remote => true, :id => 'message-form' do
+              = text_field_tag :message, nil, :class => 'span9'
+              %button.btn.pull-right Send

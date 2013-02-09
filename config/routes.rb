@@ -5,6 +5,8 @@ Playerpool::Application.routes.draw do
   resources :games, :except => :destroy
   resources :users, :except => [:new, :create, :update, :destroy]
   resources :user_teams, :only => [:create, :destroy]
+  resources :draft, :only => :index
+  resources :messages, :only => :create
   
   match "refresh" => "player_pool#refresh"
   root :to => "player_pool#index"
