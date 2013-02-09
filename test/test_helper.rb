@@ -14,4 +14,12 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  setup do
+    sign_in User.create(:email => 'email@email.com', :password => 'password', :password_confirmation => 'password')
+  end
+
+  def current_user
+    @controller.current_user
+  end
 end

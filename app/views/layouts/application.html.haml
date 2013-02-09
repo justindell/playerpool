@@ -8,8 +8,8 @@
   %body
     .container
       - if notice.present?
-        %p.notice= notice
+        %p.alert.alert-success= notice
       - if alert.present?
-        %p.alert= alert
+        %p.alert.alert-error= alert
 
       = yield

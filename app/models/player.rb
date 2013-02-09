@@ -1,6 +1,7 @@
 class Player < ActiveRecord::Base
   belongs_to :team
-  has_and_belongs_to_many :users
+  has_many :user_teams
+  has_many :users, :through => :user_teams
   has_many :boxscores, :dependent => :destroy
 
   validates_uniqueness_of :yahoo_id

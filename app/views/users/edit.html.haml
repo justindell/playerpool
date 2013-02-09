@@ -1,18 +1,23 @@
+%h2= "#{@user.first_name}'s Team"
+
 %table.table
   %thead
     %tr
       %th Name
       %th Points
+      %th
   %tbody
-    - @user.players.each do |p|
+    - @team.each do |p|
       %tr
-        %td= p.full_name
-        %td= p.points
+        %td= p.player.full_name
+        %td= p.player.points
+        %td= button_to 'delete', p, :method => :delete, :class => 'btn btn-danger btn-small'
 
-= form_tag add_player_user_path(@user), :method => :post, :class => 'form-inline' do
-  = hidden_field_tag :player_id
-  = label_tag 'Player Name:'
-  = text_field_tag :player_name, nil, :class => 'span2'
+= form_for UserTeam.new, :class => 'form-inline' do |f|
+  = f.hidden_field :user_id, :value => @user.id
+  = f.hidden_field :player_id
+  = f.label 'Player Name:'
+  = text_field_tag :player_name, nil, :class => 'span2', :autocomplete => 'off'
   %button.btn Add
 
 :javascript
@@ -28,7 +33,7 @@
           process(Object.keys(playerMap));
         },
         updater: function(item) {
-          $('#player_id').val(playerMap[item]);
+          $('#user_team_player_id').val(playerMap[item]);
           return item;
         }
       });

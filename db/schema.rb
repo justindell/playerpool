@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209142132) do
+ActiveRecord::Schema.define(:version => 20130209152808) do
 
   create_table "boxscores", :force => true do |t|
     t.integer  "player_id"
@@ -41,11 +41,6 @@ ActiveRecord::Schema.define(:version => 20130209142132) do
     t.integer  "yahoo_id"
   end
 
-  create_table "players_users", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "player_id"
-  end
-
   create_table "teams", :force => true do |t|
     t.string   "code"
     t.string   "name"
@@ -53,6 +48,16 @@ ActiveRecord::Schema.define(:version => 20130209142132) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "eliminated", :default => false
   end
+
+  create_table "user_teams", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "user_teams", ["player_id"], :name => "index_user_teams_on_player_id"
+  add_index "user_teams", ["user_id"], :name => "index_user_teams_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"

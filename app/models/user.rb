@@ -7,7 +7,8 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :first_name, :last_name
-  has_and_belongs_to_many :players
+  has_many :user_teams
+  has_many :players, :through => :user_teams
 
   def total_points
     players.inject(0){|points, player| points + player.points}

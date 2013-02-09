@@ -20,13 +20,4 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :id => @user.to_param
     assert_response :success
   end
-
-  test "should add player to user" do
-    player = Player.create :yahoo_id => 123
-    assert_difference('@user.players.count') do
-      post :add_player, :id => @user.to_param, :player_id => player
-    end
-
-    assert_redirected_to edit_user_path(@user)
-  end
 end

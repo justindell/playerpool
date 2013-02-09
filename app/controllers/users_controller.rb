@@ -24,12 +24,6 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-  end
-
-  def add_player
-    @user = User.find(params[:id])
-    @user.players << Player.find(params[:player_id])
-
-    redirect_to(edit_user_url(@user), :notice => 'Player added successfully')
+    @team = @user.user_teams.includes(:player)
   end
 end
