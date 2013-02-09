@@ -1,7 +1,9 @@
 Playerpool::Application.routes.draw do
+  devise_for :users
+
   resources :teams, :players
   resources :games, :except => :destroy
-  resources :users do
+  resources :users, :except => [:new, :create, :update, :destroy] do
     post :add_player, :on => :member
   end
   

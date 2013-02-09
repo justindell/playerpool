@@ -6,6 +6,7 @@ gem 'sqlite3'
 gem 'nokogiri'
 gem 'haml'
 gem 'jquery-rails'
+gem 'devise'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
