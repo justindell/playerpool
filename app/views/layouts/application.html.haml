@@ -6,6 +6,7 @@
     = csrf_meta_tags
 
   %body
+    .pull-right= link_to 'sign out', destroy_user_session_path, :method => :delete
     .container
       - if notice.present?
         %p.alert.alert-success= notice

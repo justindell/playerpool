@@ -1,4 +1,6 @@
 class PlayerPoolController < ApplicationController
+  before_filter :auth_user!, :only => :index
+
   def index
     @users = User.includes(:players => [:boxscores, :team]).sort_by{|u| u.total_points}.reverse
   end
