@@ -7,6 +7,9 @@ class UserTeamsControllerTest < ActionController::TestCase
   end
 
   test "should post to create" do
+    pusher = mock
+    pusher.expects(:trigger).with('pick', anything).returns(true)
+    Pusher.expects(:[]).with('draft').returns(pusher)
     post :create, :user_team => {:player_id => @player.id, :user_id => @user.id }
     assert_redirected_to edit_user_url(@user)
     assert_equal 'Player Added', flash[:notice]

@@ -3,13 +3,39 @@
     %title Playerpool - Draft Room
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
-    = javascript_include_tag 'http://js.pusher.com/1.12/pusher.min.js'
     = csrf_meta_tags
   %body
     .container-fluid
       .row-fluid
         #draft-window.span8
-          %p this is the draft window
+          #draft-header.alert.alert-success
+            %p No picks yet
+          .row-fluid
+            #teams.tabbable.tabs-left.span7
+              %ul.nav.nav-tabs
+                - @users.each do |user|
+                  %li
+                    %a{:href => "#team-#{user.id}", :'data-toggle' => 'tab'}= user.full_name
+              .tab-content
+                - @users.each do |user|
+                  .tab-pane{:id => "team-#{user.id}"}
+                    %h5= "#{user.full_name}'s Team"
+                    %ol
+                      - user.players.each do |player|
+                        %li= "#{player.full_name} (#{player.team})"
+            #pick-window.span5
+              #pick-input
+                = form_for UserTeam.new, :class => 'form-inline', :remote => true do |f|
+                  = f.hidden_field :user_id, :value => current_user.id
+                  = f.hidden_field :player_id
+                  = f.label 'Player Name:'
+                  = text_field_tag :player_name, nil, :class => 'span9', :autocomplete => 'off'
+                  %button.btn.pull-right Draft
+              #best-available
+                %h4 Best Available
+                %ol
+                  %li Tyler Griffey
+                  %li No one else
         #chat-window.span4
           #chat-content
             %ul#messages
