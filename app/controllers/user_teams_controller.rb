@@ -9,7 +9,11 @@ class UserTeamsController < ApplicationController
         :team_name => @user_team.player.team.to_s)
 
       Pusher['draft'].trigger('pick', full_attributes)
-      redirect_to edit_user_url(@user_team.user_id), :notice => 'Player Added'
+
+      respond_to do |format|
+        format.html { redirect_to edit_user_url(@user_team.user_id), :notice => 'Player Added' }
+        format.json { render :json => @user_team, :status => :created }
+      end
     else
       redirect_to :back, :alert => 'There was an error adding the player'
     end

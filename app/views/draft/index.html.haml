@@ -25,7 +25,7 @@
                         %li= "#{player.full_name} (#{player.team})"
             #pick-window.span5
               #pick-input
-                = form_for UserTeam.new, :class => 'form-inline', :remote => true do |f|
+                = form_for UserTeam.new, :class => 'form-inline', :remote => true, :url => '/user_teams.json' do |f|
                   = f.hidden_field :user_id, :value => current_user.id
                   = f.hidden_field :player_id
                   = f.label 'Player Name:'

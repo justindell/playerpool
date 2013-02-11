@@ -24,6 +24,6 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
-    @team = @user.user_teams.includes(:player)
+    @team = @user.user_teams.includes(:player => :boxscores)
   end
 end
