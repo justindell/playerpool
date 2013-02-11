@@ -4,7 +4,7 @@ class UserTeamsController < ApplicationController
 
     if @user_team.save
       full_attributes = @user_team.attributes.merge(
-        :player_name => params[:player_name],
+        :player_name => @user_team.player.full_name,
         :user_name => @user_team.user.full_name,
         :team_name => @user_team.player.team.to_s)
 

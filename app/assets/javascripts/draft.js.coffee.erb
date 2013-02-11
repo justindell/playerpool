@@ -8,6 +8,8 @@ colorMap = {
 $ ->
   $('#message-form').on 'ajax:success', (event) ->
     $('input#message').val('')
+  $('#new_user_team').on 'submit', (event) ->
+    $('input#player_name').val('')
 
   pusher = new Pusher('<%= Pusher.key %>')
   channel = pusher.subscribe('draft')
