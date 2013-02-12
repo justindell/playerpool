@@ -9,4 +9,8 @@ module DraftHelper
   def color_for_user user
     COLOR_MAP[user % 12]
   end
+
+  def player_and_team player
+    "#{player.full_name} (#{player.team})"
+  end
 end

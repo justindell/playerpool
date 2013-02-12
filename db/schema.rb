@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209222712) do
+ActiveRecord::Schema.define(:version => 20130212161858) do
 
   create_table "boxscores", :force => true do |t|
     t.integer  "player_id"
@@ -42,6 +42,16 @@ ActiveRecord::Schema.define(:version => 20130209222712) do
 
   add_index "messages", ["user_id"], :name => "index_messages_on_user_id"
 
+  create_table "picks", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "picks", ["player_id"], :name => "index_user_teams_on_player_id"
+  add_index "picks", ["user_id"], :name => "index_user_teams_on_user_id"
+
   create_table "players", :force => true do |t|
     t.integer  "team_id"
     t.string   "first_name"
@@ -58,16 +68,6 @@ ActiveRecord::Schema.define(:version => 20130209222712) do
     t.datetime "updated_at",                    :null => false
     t.boolean  "eliminated", :default => false
   end
-
-  create_table "user_teams", :force => true do |t|
-    t.integer  "player_id"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "user_teams", ["player_id"], :name => "index_user_teams_on_player_id"
-  add_index "user_teams", ["user_id"], :name => "index_user_teams_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"

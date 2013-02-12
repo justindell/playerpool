@@ -10,7 +10,7 @@ $(function() {
         process(Object.keys(playerMap));
       },
       updater: function(item) {
-        $('#user_team_player_id').val(playerMap[item]);
+        $('#pick_player_id').val(playerMap[item]);
         return item;
       }
     });

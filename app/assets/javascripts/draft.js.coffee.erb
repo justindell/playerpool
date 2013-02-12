@@ -8,7 +8,7 @@ colorMap = {
 $ ->
   $('#message-form').on 'ajax:success', (event) ->
     $('input#message').val('')
-  $('#new_user_team').on 'submit', (event) ->
+  $('#new_pick').on 'submit', (event) ->
     $('input#player_name').val('')
 
   pusher = new Pusher('<%= Pusher.key %>')
@@ -19,3 +19,4 @@ $ ->
   channel.bind 'pick', (message) ->
     $('#draft-header p').text(message.user_name + " picks " + message.player_name)
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
+    $('#recent-picks ul').prepend('<li>' + message.user_name + ': ' + message.player_name + ' (' + message.team_name + ')</li>')

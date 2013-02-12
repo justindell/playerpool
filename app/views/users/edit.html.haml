@@ -13,7 +13,7 @@
         %td= p.player.points
         %td= button_to 'delete', p, :method => :delete, :class => 'btn btn-danger btn-small'
 
-= form_for UserTeam.new, :class => 'form-inline' do |f|
+= form_for Pick.new, :class => 'form-inline' do |f|
   = f.hidden_field :user_id, :value => @user.id
   = f.hidden_field :player_id
   = f.label 'Player Name:'

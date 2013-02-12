@@ -22,20 +22,20 @@
                     %h5= "#{user.full_name}'s Team"
                     %ol
                       - user.players.each do |player|
-                        %li= "#{player.full_name} (#{player.team})"
+                        %li= player_and_team(player)
             #pick-window.span5
               #pick-input
-                = form_for UserTeam.new, :class => 'form-inline', :remote => true, :url => '/user_teams.json' do |f|
+                = form_for Pick.new, :class => 'form-inline', :remote => true, :url => '/picks.json' do |f|
                   = f.hidden_field :user_id, :value => current_user.id
                   = f.hidden_field :player_id
                   = f.label 'Player Name:'
                   = text_field_tag :player_name, nil, :class => 'span9', :autocomplete => 'off'
                   %button.btn.pull-right Draft
-              #best-available
-                %h4 Best Available
-                %ol
-                  %li Tyler Griffey
-                  %li No one else
+              #recent-picks
+                %h4 Recent Picks
+                %ul
+                  - @picks.reverse.each do |pick|
+                    %li= "#{pick.user.full_name}: #{player_and_team(pick.player)}"
         #chat-window.span4
           #chat-content
             %ul#messages
