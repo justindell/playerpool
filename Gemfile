@@ -9,6 +9,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'pusher'
 gem 'pg'
+gem 'thin'
 
 group :assets do
   gem 'sass-rails', '~> 3.2.3'
