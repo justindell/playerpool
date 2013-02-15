@@ -11,7 +11,7 @@ Playerpool::Application.configure do
   config.assets.compress = false
   config.assets.debug = true
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  Pusher.app_id = '37132'
-  Pusher.key    = 'd3796788a997f2700609'
-  Pusher.secret = '7ebfb24a9526017ec80c'
+  Pusher.app_id = '37535'
+  Pusher.key    = 'bbc60f0efd2a75339612'
+  Pusher.secret = '5f384ffe6ef6551a9b1f'
 end
