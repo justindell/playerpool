@@ -1,9 +1,4 @@
-# duplicated in draft_helper
-colorMap = {
-  1: 'blue', 2: 'red', 3: 'green', 4: 'brown',
-  5: 'darkorange', 6: 'purple', 7: 'olive', 8: 'firebrick',
-  9: 'darkslateblue', 10: 'dimgray', 11: 'coral', 12: 'darkolivegreen'
-}
+colorMap = <%= DraftHelper::COLOR_MAP.to_json %>
 
 $ ->
   $('#message-form').on 'ajax:success', (event) ->
