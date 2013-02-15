@@ -31,11 +31,13 @@
                   = f.label 'Player Name:'
                   = text_field_tag :player_name, nil, :class => 'span9', :autocomplete => 'off'
                   %button.btn.pull-right Draft
-              #recent-picks
-                %h4 Recent Picks
-                %ul
-                  - @picks.reverse.each do |pick|
-                    %li= "#{pick.user.full_name}: #{player_and_team(pick.player)}"
+              #round
+                - round_index = @picks.count / 12
+                %h4= "Round #{round_index + 1}"
+                %ol
+                  - 12.times do |i|
+                    - pick = @picks[round_index * 12 + i]
+                    %li= pick.nil? ? "" : "#{pick.user.full_name}: #{player_and_team(pick.player)}"
         #chat-window.span4
           #chat-content
             %ul#messages

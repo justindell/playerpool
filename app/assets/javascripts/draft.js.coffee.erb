@@ -14,4 +14,8 @@ $ ->
   channel.bind 'pick', (message) ->
     $('#draft-header p').text(message.user_name + " picks " + message.player_name)
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
-    $('#recent-picks ul').prepend('<li>' + message.user_name + ': ' + message.player_name + ' (' + message.team_name + ')</li>')
+    if $('#round ol li:empty:eq(0)').length == 0
+      nextRound = parseInt($('#round h4').text().split(' ')[1]) + 1
+      $('#round h4').text('Round ' + nextRound)
+      $('#round ol li').text('')
+    $('#round ol li:empty:eq(0)').text(message.user_name + ': ' + message.player_name + ' (' + message.team_name + ')')
