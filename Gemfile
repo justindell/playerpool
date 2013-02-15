@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
+ruby '1.9.3'
 
 gem 'rails', '3.2.12'
 
-gem 'sqlite3'
 gem 'nokogiri'
 gem 'haml'
 gem 'jquery-rails'
@@ -17,6 +17,7 @@ group :assets do
 end
 
 group :development, :test do
+  gem 'sqlite3'
   gem 'mocha', :require => false
   gem 'haml-rails'
 end
