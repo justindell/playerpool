@@ -12,6 +12,8 @@ $ ->
     false
   $('#message-form').on 'ajax:success', (event) ->
     $('input#message').val('')
+  $('#message-form').on 'submit', (event) ->
+    false if $('input#message').val() == ""
   $('#new_pick').on 'submit', (event) ->
     $('input#player_name').val('')
   $('#new_pick').on 'ajax:error', (event, response) ->
