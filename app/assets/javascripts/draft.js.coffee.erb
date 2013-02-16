@@ -6,10 +6,17 @@ colorMap = {
 }
 
 $ ->
+  $('#error-alert').alert()
+  $('#error-alert').bind 'close', () ->
+    $('#error-alert').hide()
+    false
   $('#message-form').on 'ajax:success', (event) ->
     $('input#message').val('')
   $('#new_pick').on 'submit', (event) ->
     $('input#player_name').val('')
+  $('#new_pick').on 'ajax:error', (event, response) ->
+    $('#error-alert span').text(JSON.parse(response.responseText).errors[0])
+    $('#error-alert').show()
 
   pusher = new Pusher('<%= Pusher.key %>')
   channel = pusher.subscribe('draft')
@@ -19,7 +26,7 @@ $ ->
     $('#messages').append("<li style='color:" + color + ";'>" + message.user_name + ': ' + message.body + '</li>')
     content.animate { scrollTop: content.prop("scrollHeight") - content.height() }, 1000
   channel.bind 'pick', (message) ->
-    $('#draft-header p').text(message.user_name + " picks " + message.player_name)
+    $('#draft-header').text(message.user_name + " picks " + message.player_name)
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
     if $('#round ol li:empty:eq(0)').length == 0
       nextRound = parseInt($('#round h4').text().split(' ')[1]) + 1

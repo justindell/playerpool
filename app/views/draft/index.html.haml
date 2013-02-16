@@ -9,7 +9,10 @@
       .row-fluid
         #draft-window.span8
           #draft-header.alert.alert-success
-            %p No picks yet
+            No picks yet
+          #error-alert.alert.alert-error.hide
+            %button.close{ :"data-dismiss" => 'alert', :href => '#' } ×
+            %span
           .row-fluid
             #teams.tabbable.tabs-left.span7
               %ul.nav.nav-tabs

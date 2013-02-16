@@ -15,7 +15,10 @@ class PicksController < ApplicationController
         format.json { render :json => @pick, :status => :created }
       end
     else
-      redirect_to :back, :alert => 'There was an error adding the player'
+      respond_to do |format|
+        format.html { redirect_to :back, :alert => 'There was an error adding the player' }
+        format.json { render :json => {:errors => @pick.errors.full_messages}, :status => :unprocessable_entity }
+      end
     end
   end
 
