@@ -15,7 +15,9 @@ $ ->
   channel = pusher.subscribe('draft')
   channel.bind 'chat', (message) ->
     color = colorMap[message.user_id % 12]
+    content = $('#chat-content')
     $('#messages').append("<li style='color:" + color + ";'>" + message.user_name + ': ' + message.body + '</li>')
+    content.animate { scrollTop: content.prop("scrollHeight") - content.height }, 1000
   channel.bind 'pick', (message) ->
     $('#draft-header p').text(message.user_name + " picks " + message.player_name)
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
