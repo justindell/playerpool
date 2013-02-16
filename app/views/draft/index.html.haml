@@ -32,11 +32,11 @@
                   = text_field_tag :player_name, nil, :class => 'span9', :autocomplete => 'off'
                   %button.btn.pull-right Draft
               #round
-                - round_index = @picks.count / 12
+                - round_index = @picks.count / @users.count
                 %h4= "Round #{round_index + 1}"
                 %ol
-                  - 12.times do |i|
-                    - pick = @picks[round_index * 12 + i]
+                  - @users.count.times do |i|
+                    - pick = @picks[round_index * @users.count + i]
                     %li= pick.nil? ? "" : "#{pick.user.full_name}: #{player_and_team(pick.player)}"
         #chat-window.span4
           #chat-content
