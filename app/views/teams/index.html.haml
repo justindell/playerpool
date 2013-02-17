@@ -1,18 +1,16 @@
 %h1 Listing teams
 
-%table
+%table.table.table-condensed
   %tr
     %th Code
     %th Name
     %th
     %th
-    %th
 
   - @teams.each do |team|
     %tr
-      %td= team.code
-      %td= team.name
-      %td= link_to 'Show', team
+      %td= link_to(team.code, team)
+      %td= link_to(team.name, team)
       %td= link_to 'Edit', edit_team_path(team)
       %td= link_to 'Destroy', team, :confirm => 'Are you sure?', :method => :delete
 

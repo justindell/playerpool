@@ -5,7 +5,5 @@
 \|
 = link_to 'Back', users_path
 
-= javascript_include_tag 'user_updater'
-
 = javascript_tag do
-  $(document).ready(refresher("#{Date.today.to_s}", #{@user.id}));
+  $(document).ready(user_refresher("#{Date.today.to_s}", #{@user.id}));

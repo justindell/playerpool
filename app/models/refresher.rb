@@ -10,7 +10,7 @@ class Refresher
     doc.search('#ysp-leaguescoreboard table.ysptblclbg3').each do |game|
       link = game.search('table').last.search('.yspscores').last.search('a').first
       next unless link.inner_html == "Box Score"
-      url = "http://rivals.yahoo.com/#{link['href']}"
+      url = "http://rivals.yahoo.com#{link['href']}"
       game = Game.find_by_url url
       game.destroy if game && !game.is_final
       Game.create(:url => url) if game.nil? || game.destroyed?

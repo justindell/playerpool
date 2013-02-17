@@ -20,6 +20,10 @@ class Game < ActiveRecord::Base
     self.home = Team.find_or_create_by_code(:code => home_team.match(/teams\/(.*)\"/)[1], :name => home_team.match(/\">(.*)<\/a>/)[1])
     home_points = response.css('#ysp-reg-box-line_score .home em').inner_html.to_i
     away_points = response.css('#ysp-reg-box-line_score .away em').inner_html.to_i
+    if response.css('#ysp-reg-box-game_details-game_stats').css('.bd').empty?
+      Rails.logger.warn "no box score found for #{self.url}"
+      return
+    end
     response.css('#ysp-reg-box-game_details-game_stats').css('.bd').first.search('tbody tr').each do |p|
       player_data = p.search('a').to_html
       player = Player.find_or_create_by_yahoo_id(:yahoo_id => player_data.match(/[0-9]+/)[0],
