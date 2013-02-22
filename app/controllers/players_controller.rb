@@ -1,4 +1,7 @@
 class PlayersController < ApplicationController
+  caches_page :index, :if => Proc.new { |c| c.request.format.json? }
+  cache_sweeper :player_sweeper
+
   # GET /players
   # GET /players.json
   def index

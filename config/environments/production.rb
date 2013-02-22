@@ -9,6 +9,7 @@ Playerpool::Application.configure do
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
   config.action_mailer.default_url_options = { :host => 'playerpool.heroku.com' }
+  config.cache_store = :dalli_store
 
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',

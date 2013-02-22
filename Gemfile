@@ -8,6 +8,7 @@ gem 'haml'
 gem 'jquery-rails'
 gem 'devise'
 gem 'pusher'
+gem 'dalli'
 gem 'pg'
 gem 'thin'
 

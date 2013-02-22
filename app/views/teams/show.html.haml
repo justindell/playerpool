@@ -9,7 +9,8 @@
   %b Players:
   %ul
     - @team.players.each do |player|
-      %li= player.full_name
+      %li
+        = link_to player.full_name, player
 
 
 = link_to 'Edit', edit_team_path(@team)
