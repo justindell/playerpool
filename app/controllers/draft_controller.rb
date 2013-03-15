@@ -1,4 +1,6 @@
 class DraftController < ApplicationController
+  before_filter :auth_user!
+
   def index
     @users = User.includes(:players => :team)
     @picks = Pick.includes(:player, :user)
