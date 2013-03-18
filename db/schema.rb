@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212161858) do
+ActiveRecord::Schema.define(:version => 20130318211105) do
 
   create_table "boxscores", :force => true do |t|
     t.integer  "player_id"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20130212161858) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
+    t.string   "team_name"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

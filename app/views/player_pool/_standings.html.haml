@@ -1,14 +1,16 @@
 %table.table.table-bordered{:border => 1}
   %thead
     %tr
-      %th Name
+      %th Team
       %th Remaining
       %th Total Points
   %tbody
   - @users.each do |u|
     %tr
-      %td= link_to u.full_name, u
+      - team_name = u.team_name ? "#{u.team_name} (#{u.full_name})" : u.full_name
+      %td= link_to team_name, u
       %td= u.players_remaining
       %td= u.total_points
 
+= link_to 'Update team name', edit_user_registration_path
 %p#last_refresh= "Last refresh: #{(Time.now + 2.hours).strftime("%I:%M:%S %p")}"
