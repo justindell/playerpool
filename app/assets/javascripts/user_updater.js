@@ -13,5 +13,5 @@ function user_refresher(refresh_date, user_id) {
         }
       }
     });
-  }, 30000);
+  }, 60000);
 }

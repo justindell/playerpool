@@ -13,5 +13,5 @@ function player_refresher(refresh_date) {
         }
       }
     });
-  }, 30000);
+  }, 60000);
 }
