@@ -39,7 +39,7 @@
                   %h5= "Round #{round}"
                   %ol
                     - @users.count.times do |i|
-                      - pick = @picks[round * @users.count + i]
+                      - pick = @picks[(round - 1) * @users.count + i]
                       %li= pick.nil? ? "" : "#{pick.user.full_name}: #{player_and_team(pick.player)}"
         #chat-window.span4
           #chat-content
