@@ -35,4 +35,3 @@ $ ->
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
     roundWindow = $('#round-window')
     roundWindow.find('ol li:empty:eq(0)').text(message.user_name + ': ' + message.player_name + ' (' + message.team_name + ')')
-    scrollToBottom roundWindow
