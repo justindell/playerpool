@@ -1,25 +1,31 @@
 %h1 Listing players
 
-%table
-  %tr
-    %th Team
-    %th First name
-    %th Last name
-    %th Points
-    %th
-    %th
-    %th
-
-  - @players.each do |player|
+%table#players.tablesorter
+  %thead
     %tr
-      %td= player.team
-      %td= player.first_name
-      %td= player.last_name
-      %td= player.points
-      %td= link_to 'Show', player
-      %td= link_to 'Edit', edit_player_path(player)
-      %td= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete
+      %th Team
+      %th Name
+      %th Points
+      %th User
+      %th
+      %th
+      %th
+  %tbody
+    - @players.each do |player|
+      %tr
+        %td= player.team
+        %td= player.full_name
+        %td= player.points
+        %td= player.picks.first.try(:user).try(:full_name)
+        %td= link_to 'Show', player
+        %td= link_to 'Edit', edit_player_path(player)
+        %td= link_to 'Destroy', player, :confirm => 'Are you sure?', :method => :delete
 
 %br
 
 = link_to 'New Player', new_player_path
+
+:javascript
+  $(document).ready(function() {
+    $("#players").tablesorter();
+  });

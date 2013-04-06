@@ -5,7 +5,7 @@ class PlayersController < ApplicationController
   # GET /players
   # GET /players.json
   def index
-    @players = Player.includes(:team).all
+    @players = Player.includes(:team, :boxscores, {:picks => :user}).all
 
     respond_to do |format|
       format.html # index.html.erb
