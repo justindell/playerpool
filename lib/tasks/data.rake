@@ -6,7 +6,7 @@ namespace :data do
   desc "load all teams"
   task :load_teams => :environment do
     begin
-      response = Net::HTTP.get_response(URI.parse("http://rivals.yahoo.com/ncaa/basketball/teams"))
+      response = Net::HTTP.get_response(URI.parse("http://sports.yahoo.com/ncaa/basketball/teams"))
       doc = Nokogiri::HTML(response.body)
       doc.search("a").each do |line|
         if line.to_html.match(/ncaab\/teams\//)
@@ -25,7 +25,7 @@ namespace :data do
     Team.all.each do |team|
       begin
         puts "loading #{team}"
-        response = Net::HTTP.get_response(URI.parse("http://rivals.yahoo.com/ncaa/basketball/teams/#{team.code}/roster"))
+        response = Net::HTTP.get_response(URI.parse("http://sports.yahoo.com/ncaa/basketball/teams/#{team.code}/roster"))
         doc = Nokogiri::HTML(response.body)
         teamname = doc.search("title").first.inner_html.split(' -').first
         doc.search("td a").each do |a| 
@@ -44,6 +44,6 @@ namespace :data do
 
   desc "refresh todays games"
   task :refresh => :environment do
-    Refresher.refresh Date.today.to_s
+    Refresher.refresh Date.yesterday.to_s
   end
 end
