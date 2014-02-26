@@ -15,6 +15,8 @@ gem 'pusher', '~> 0.12.0'
 gem 'dalli', '~> 2.7.0'
 gem 'pg', '~> 0.17.1'
 gem 'thin', '~> 1.6.1'
+gem 'paperclip', '~> 4.1.1'
+gem 'aws-sdk', '~> 1.34.1'
 
 group :production do
   gem 'rails_12factor'

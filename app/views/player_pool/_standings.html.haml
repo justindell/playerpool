@@ -7,8 +7,10 @@
   %tbody
   - @users.each do |u|
     %tr
-      - team_name = u.team_name ? "#{u.team_name} (#{u.full_name})" : u.full_name
-      %td= link_to team_name, u
+      %td
+        = image_tag u.avatar.url(:mini)
+        - team_name = u.team_name ? "#{u.team_name} (#{u.full_name})" : u.full_name
+        = link_to team_name, u
       %td= u.players_remaining
       %td= u.total_points
 
