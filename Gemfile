@@ -1,24 +1,23 @@
 source 'http://rubygems.org'
-ruby '1.9.3'
+ruby '2.1.1'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.3'
 
-gem 'nokogiri'
-gem 'haml'
-gem 'jquery-rails'
-gem 'devise'
-gem 'pusher'
-gem 'dalli'
-gem 'pg'
-gem 'thin'
+gem 'sass-rails', '~> 4.0.1'
+gem 'coffee-rails', '~> 4.0.1'
+gem 'uglifier', '~> 2.4.0'
 
-group :assets do
-  gem 'sass-rails', '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
-end
+gem 'nokogiri', '~> 1.6.1'
+gem 'haml', '~> 4.0.1'
+gem 'jquery-rails', '~> 3.1.0'
+gem 'devise', '~> 3.2.3'
+gem 'pusher', '~> 0.12.0'
+gem 'dalli', '~> 2.7.0'
+gem 'pg', '~> 0.17.1'
+gem 'thin', '~> 1.6.1'
 
 group :development, :test do
+  gem 'test-unit'
   gem 'sqlite3'
   gem 'mocha', :require => false
   gem 'haml-rails'

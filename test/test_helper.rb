@@ -3,7 +3,9 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'mocha/setup'
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
+  ActiveRecord::Migration.check_pending!
+
   def setup
     response = mock
     response.stubs('body').returns(File.read(File.expand_path('../data/game.html', __FILE__)))

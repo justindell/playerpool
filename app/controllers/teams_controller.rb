@@ -40,7 +40,7 @@ class TeamsController < ApplicationController
   # POST /teams
   # POST /teams.json
   def create
-    @team = Team.new(params[:team])
+    @team = Team.new(team_params)
 
     respond_to do |format|
       if @team.save
@@ -59,7 +59,7 @@ class TeamsController < ApplicationController
     @team = Team.find(params[:id])
 
     respond_to do |format|
-      if @team.update_attributes(params[:team])
+      if @team.update_attributes(team_params)
         format.html { redirect_to(@team, :notice => 'Team was successfully updated.') }
         format.json  { head :ok }
       else
@@ -79,5 +79,10 @@ class TeamsController < ApplicationController
       format.html { redirect_to(teams_url) }
       format.json  { head :ok }
     end
+  end
+
+  private
+  def team_params
+    params.require(:team).permit!
   end
 end

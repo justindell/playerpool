@@ -18,7 +18,7 @@ class PlayersControllerTest < ActionController::TestCase
 
   test "should create player" do
     assert_difference('Player.count') do
-      post :create, :player => @player.attributes.merge(:yahoo_id => 5, :last_name => 'Smith')
+      post :create, :player => {:yahoo_id => 5, :last_name => 'Smith'}
     end
 
     assert_redirected_to player_path(assigns(:player))

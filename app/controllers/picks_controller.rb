@@ -1,6 +1,6 @@
 class PicksController < ApplicationController
   def create
-    @pick = Pick.new(params[:pick])
+    @pick = Pick.new(pick_params)
 
     if @pick.save
       full_attributes = @pick.attributes.merge(
@@ -25,5 +25,10 @@ class PicksController < ApplicationController
   def destroy
     team = Pick.destroy params[:id]
     redirect_to edit_user_url(team.user_id), :notice => 'Player Removed'
+  end
+
+  private
+  def pick_params
+    params.require(:pick).permit!
   end
 end

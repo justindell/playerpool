@@ -8,6 +8,6 @@ Playerpool::Application.routes.draw do
   resources :draft, :only => :index
   resources :messages, :only => :create
   
-  match "refresh" => "player_pool#refresh"
-  root :to => "player_pool#index"
+  get 'refresh' => 'player_pool#refresh'
+  root :to => 'player_pool#index'
 end
