@@ -16,6 +16,10 @@ gem 'dalli', '~> 2.7.0'
 gem 'pg', '~> 0.17.1'
 gem 'thin', '~> 1.6.1'
 
+group :production do
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   gem 'test-unit'
   gem 'sqlite3'
