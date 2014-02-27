@@ -21,4 +21,8 @@ class User < ActiveRecord::Base
   def players_remaining
     players.reject{|p| p.eliminated?}.count
   end
+
+  def can_edit? other
+    total_points > other.total_points || self == other
+  end
 end

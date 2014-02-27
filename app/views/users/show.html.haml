@@ -1,9 +1,5 @@
 #players
   = render :partial => 'players'
 
-= link_to 'Edit', edit_user_path(@user)
-\|
-= link_to 'Back', users_path
-
 = javascript_tag do
   $(document).ready(user_refresher("#{Date.today.to_s}", #{@user.id}));

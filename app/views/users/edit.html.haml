@@ -1,23 +1,36 @@
 %h2= "#{@user.first_name}'s Team"
 
-%table.table.table-condensed
-  %thead
-    %tr
-      %th Name
-      %th Points
-      %th
-  %tbody
-    - @team.each do |p|
+- if current_user.can_edit?(@user)
+  = form_for @user, html: { class: 'form-horizontal' } do |f|
+    .control-group
+      %label.control-label{for: 'user_team_name'} Team Name
+      .controls
+        = f.text_field :team_name
+    .control-group
+      %label.control-label{for: 'user_avatar'} Avatar
+      .controls
+        = f.file_field :avatar
+    .control-group
+      .controls
+        = f.submit 'Save', class: 'btn btn-primary'
+
+- if current_user.id == 1
+  %table.table.table-condensed
+    %thead
       %tr
-        %td= p.player.full_name
-        %td= p.player.points
-        %td= button_to 'delete', p, :method => :delete, :class => 'btn btn-danger btn-small'
+        %th Name
+        %th Points
+        %th
+    %tbody
+      - @team.each do |p|
+        %tr
+          %td= p.player.full_name
+          %td= p.player.points
+          %td= button_to 'delete', p, :method => :delete, :class => 'btn btn-danger btn-small'
 
-= form_for Pick.new, :class => 'form-inline' do |f|
-  = f.hidden_field :user_id, :value => @user.id
-  = f.hidden_field :player_id
-  = f.label 'Player Name:'
-  = text_field_tag :player_name, nil, :class => 'span2', :autocomplete => 'off'
-  %button.btn Add
-
-:javascript
+  = form_for Pick.new, :class => 'form-inline' do |f|
+    = f.hidden_field :user_id, :value => @user.id
+    = f.hidden_field :player_id
+    = f.label 'Player Name:'
+    = text_field_tag :player_name, nil, :class => 'span2', :autocomplete => 'off'
+    %button.btn Add

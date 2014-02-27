@@ -3,7 +3,7 @@ Playerpool::Application.routes.draw do
 
   resources :teams, :players
   resources :games, :except => :destroy
-  resources :users, :except => [:new, :create, :update, :destroy]
+  resources :users, :except => [:new, :create, :destroy]
   resources :picks, :only => [:create, :destroy]
   resources :draft, :only => :index
   resources :messages, :only => :create
