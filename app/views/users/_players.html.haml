@@ -1,6 +1,6 @@
 %h2
   = image_tag @user.avatar.url(:thumb)
-  = "#{@user.full_name}: #{@user.total_points} points"
+  = "#{@user.team_name} (#{@user.full_name}): #{@user.total_points} points"
 
 - if current_user.can_edit? @user
   = link_to "Edit Name and Image", edit_user_path(@user)
