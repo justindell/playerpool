@@ -7,7 +7,7 @@ $ ->
   $('#error-alert').bind 'close', () ->
     $('#error-alert').hide()
     false
-  $('#message-form').on 'ajax:success', (event) ->
+  $('#message-form').on 'ajax:send', (event) ->
     $('input#message').val ''
   $('#message-form').on 'submit', (event) ->
     false if $('input#message').val() == ""
