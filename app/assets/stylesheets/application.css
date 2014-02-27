@@ -1,7 +1,7 @@
 /*
  *= require_self
  *= require bootstrap
- *= require ui-lightness/jquery-ui-1.10.1.custom.css
+ *= require jquery.ui.all
  *= require tablesorter/style.css
  *= require_tree .
  */

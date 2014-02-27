@@ -17,6 +17,7 @@ gem 'pg', '~> 0.17.1'
 gem 'thin', '~> 1.6.1'
 gem 'paperclip', '~> 4.1.1'
 gem 'aws-sdk', '~> 1.34.1'
+gem 'jquery-ui-rails', '~> 4.2.0'
 
 group :production do
   gem 'rails_12factor'
