@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PicksControllerTest < ActionController::TestCase
   setup do
-    @user = User.create :email => 'foo@example.com', :password => 'test', :password_confirmation => 'test'
+    @user = User.create :email => 'foo@example.com', :password => 'test', :password_confirmation => 'test', :draft_position => 1
     @player = Player.create :yahoo_id => 1, :team => Team.create(:code => 'foo')
   end
 
