@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.order(:draft_position)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -34,6 +34,13 @@ class UsersController < ApplicationController
     else
       render action: 'edit'
     end
+  end
+
+  def update_all
+    params[:users].each_with_index do |user, index|
+      User.find(user).update_attributes! :draft_position => index + 1
+    end
+    render :nothing => true
   end
 
   private

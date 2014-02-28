@@ -1,15 +1,8 @@
 %h1 Listing users
 
-%table
-  %tr
-    %th First name
-    %th Last name
-    %th
-    %th
-
+%ul.sortable
   - @users.each do |user|
-    %tr
-      %td= user.first_name
-      %td= user.last_name
-      %td= link_to 'Show', user
-      %td= link_to 'Edit', edit_user_path(user)
+    %li.ui-state-default{id: "users_#{user.id}"}
+      = "#{user.draft_position}. #{user.first_name} #{user.last_name}"
+      = link_to 'Show', user
+      = link_to 'Edit', edit_user_path(user)
