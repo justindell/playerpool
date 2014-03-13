@@ -1,3 +1,5 @@
+// TODO lots of duplication with user updater
+
 function player_refresher(refresh_date) {
   setInterval(function(){
     current_points = [];

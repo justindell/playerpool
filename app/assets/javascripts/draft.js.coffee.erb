@@ -1,8 +1,9 @@
-colorMap = <%= DraftHelper::COLOR_MAP.to_json %>
 scrollToBottom = (content) ->
   content.animate { scrollTop: content.prop("scrollHeight") - content.height() }, 1000
 
 $ ->
+  colorMap = <%= DraftHelper::COLOR_MAP.to_json %>
+
   $('#error-alert').alert()
   $('#error-alert').bind 'close', () ->
     $('#error-alert').hide()
@@ -27,5 +28,6 @@ $ ->
   channel.bind 'pick', (message) ->
     $('#draft-header').text(message.user_name + " picks " + message.player_name)
     $('#team-' + message.user_id + ' ol').append('<li>' + message.player_name + ' (' + message.team_name + ')</li>')
+    $('body').effect('highlight') if message.current_pick == current_user
     roundWindow = $('#round-window')
     roundWindow.find('ol li:empty:eq(0)').text(message.user_name + ': ' + message.player_name + ' (' + message.team_name + ')')

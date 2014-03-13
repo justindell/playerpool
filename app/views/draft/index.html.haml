@@ -50,3 +50,7 @@
             = form_tag '/messages', :remote => true, :id => 'message-form' do
               = text_field_tag :message, nil, :class => 'span9'
               %button.btn.pull-right Send
+
+      :coffee
+        $ ->
+          window.current_user = #{current_user.id}

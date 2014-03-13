@@ -4,9 +4,10 @@ class PicksController < ApplicationController
 
     if @pick.save
       full_attributes = @pick.attributes.merge(
-        :player_name => @pick.player.full_name,
-        :user_name => @pick.user.full_name,
-        :team_name => @pick.player.team.to_s)
+        player_name: @pick.player.full_name,
+        user_name: @pick.user.full_name,
+        team_name: @pick.player.team.to_s,
+        current_pick: Pick.current_pick)
 
       Pusher['draft'].trigger('pick', full_attributes)
 
