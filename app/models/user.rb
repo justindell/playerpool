@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :picks
   has_many :players, :through => :picks
+  default_scope where(:id => [1, 2, 3])
   has_attached_file :avatar, styles: { thumb: "100x100>", mini: "50x50>" }
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\Z/
 
