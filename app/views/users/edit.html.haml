@@ -3,9 +3,6 @@
 - if current_user.can_edit?(@user)
   = form_for @user, html: { class: 'form-horizontal' } do |f|
     .control-group
-      .controls
-        = f.text_field :draft_position
-    .control-group
       %label.control-label{for: 'user_team_name'} Team Name
       .controls
         = f.text_field :team_name
