@@ -3,3 +3,5 @@ cache players.json
 only load draft.js in draft window
 websockets
 draft notification doesnt work
+cache game results
+handle redirects better

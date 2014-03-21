@@ -11,7 +11,7 @@ class Game < ActiveRecord::Base
   def fetch_game_attributes
     Rails.logger.info "fetching game attributes for #{self.url}"
     http_response = Net::HTTP.get_response(URI.parse(self.url))
-    http_response = Net::HTTP.get_response(URI.parse(http_response['location'])) if http_response.is_a? Net::HTTPRedirection 
+    http_response = Net::HTTP.get_response(URI.parse(http_response['location'] + '/')) if http_response.is_a? Net::HTTPRedirection 
     raise "ERROR: HTTP RESPONSE STATUS NOT 200: #{http_response.code} - #{http_response.body}" if http_response.code != '200'
     response = Nokogiri::HTML(http_response.body)
     away_team = response.search("#mediamodulematchheadergrandslam .teams-container .team.away a").last.to_html
