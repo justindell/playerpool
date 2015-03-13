@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   def auth_user!
-    redirect_to new_user_registration_path unless user_signed_in?
+    redirect_to new_user_session_path unless user_signed_in?
   end
 
   protected

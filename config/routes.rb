@@ -9,7 +9,7 @@ Playerpool::Application.routes.draw do
   resources :picks, :only => [:create, :destroy]
   resources :draft, :only => :index
   resources :messages, :only => :create
-  
+
   get 'refresh' => 'player_pool#refresh'
   root :to => 'player_pool#index'
 end
