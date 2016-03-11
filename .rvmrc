@@ -1,2 +1,0 @@
-rvm --install use ruby-1.9.3
-rvm --create gemset use playerpool

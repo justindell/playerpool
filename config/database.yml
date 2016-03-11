@@ -9,6 +9,13 @@ test:
   pool: 5
   timeout: 5000
 
+mirror:
+  adapter: postgresql
+  host: ec2-54-83-204-159.compute-1.amazonaws.com
+  user: npeilyglfidgmw
+  password: u98psWk9fVKTy07O_2WiHvOpI6@
+  database: d50gi5n96bio24
+
 production:
   adapter: postgresql
   host: localhost
