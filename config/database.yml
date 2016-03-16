@@ -13,7 +13,7 @@ mirror:
   adapter: postgresql
   host: ec2-54-83-204-159.compute-1.amazonaws.com
   user: npeilyglfidgmw
-  password: u98psWk9fVKTy07O_2WiHvOpI6@
+  password: u98psWk9fVKTy07O_2WiHvOpI6
   database: d50gi5n96bio24
 
 production:
