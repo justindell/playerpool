@@ -14,19 +14,20 @@ class Game < ActiveRecord::Base
     http_response = Net::HTTP.get_response(URI.parse(http_response['location'] + '/')) if http_response.is_a? Net::HTTPRedirection
     raise "ERROR: HTTP RESPONSE STATUS NOT 200: #{http_response.code} - #{http_response.body}" if http_response.code != '200'
     response = Nokogiri::HTML(http_response.body)
-    away_team = response.search("#mediamodulematchheadergrandslam .teams-container .team.away a").last.to_html
-    home_team = response.search("#mediamodulematchheadergrandslam .teams-container .team.home a").last.to_html
-    self.away = Team.create_with(:name => away_team.match(/\">(.*)<\/a>/)[1]).find_or_create_by(:code => away_team.match(/teams\/(.*)\/\"/)[1])
-    self.home = Team.create_with(:name => home_team.match(/\">(.*)<\/a>/)[1]).find_or_create_by(:code => home_team.match(/teams\/(.*)\/\"/)[1])
-    away_points = response.search('#mediamodulematchheadergrandslam .teams-container .boxscore .score').first.inner_html.to_i
-    home_points = response.search('#mediamodulematchheadergrandslam .teams-container .boxscore .score').last.inner_html.to_i
-    response.search('#mediasportsmatchstatsbyplayer table.yom-data').first.search('tbody tr').each do |p|
+    away_team = response.search(".scrollingContainer a span")[0].text
+    home_team = response.search(".scrollingContainer a span")[2].text
+    self.away = Team.find_by(:name => away_team)
+    self.home = Team.find_by(:name => home_team)
+    return unless response.search('.scrollingContainer .team-score>div>div>span').count > 1
+    away_points = response.search('.scrollingContainer .team-score>div>div>span')[0].text
+    home_points = response.search('.scrollingContainer .team-score>div>div>span')[1].text
+    response.search('.player-stats table').first.search('tbody tr').each do |p|
       parse_player(p, :away)
     end
-    response.search('#mediasportsmatchstatsbyplayer table.yom-data').last.search('tbody tr').each do |p|
+    response.search('.player-stats table').last.search('tbody tr').each do |p|
       parse_player(p, :home)
     end
-    if response.search('#mediamodulematchheadergrandslam .teams-container .final').length > 0
+    if response.search('.scrollingContainer').last.text.match(/Final/)
       self.is_final = true
       home_points > away_points ? self.away.update_attributes!(:eliminated => true) : self.home.update_attributes!(:eliminated => true)
     end
@@ -34,19 +35,18 @@ class Game < ActiveRecord::Base
 
   private
   def parse_player p, team
-    player_data = p.search('.athlete a').to_html
-    return if player_data.blank?
-    create_boxscore find_or_create_player(player_data, team), p
+    player = find_or_create_player(p, team)
+    return unless player
+    create_boxscore player, p
   end
 
   def find_or_create_player player_data, team
-    Player.create_with(:first_name => player_data.match(/data-entity-display-name="(\S*) (.*)" data-entity-league/)[1],
-                       :last_name => player_data.match(/data-entity-display-name="(\S*) (.*)" data-entity-league/)[2],
-                       :team_id => self.send(team).to_param).
-           find_or_create_by(:yahoo_id => player_data.match(/[0-9]+/)[0])
+    Player.find_by(:yahoo_id => player_data.search('th a').attr('href').value.split('/').last)
+  rescue
+    return nil
   end
 
   def create_boxscore player, p
-    self.boxscores << Boxscore.create!(:player => player, :points => p.search('td').last.inner_html.to_i)
+    self.boxscores << Boxscore.create!(:player => player, :points => p.search('td').last.text.to_i)
   end
 end
