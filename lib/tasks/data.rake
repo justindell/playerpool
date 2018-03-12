@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'json'
 require 'nokogiri'
 
 namespace :data do
@@ -26,15 +27,11 @@ namespace :data do
       begin
         puts "loading #{team}"
         response = Net::HTTP.get_response(URI.parse("http://sports.yahoo.com/ncaa/basketball/teams/#{team.code}/roster"))
-        doc = Nokogiri::HTML(response.body)
-        teamname = doc.search("title").first.inner_html.split(' -').first
-        doc.search("td a").each do |a|
-          if a.to_html.match(/ncaab\/players\//)
-            name = a.inner_html.split(', ').reverse
-            id = a['href'].match(/[0-9]+/)[0]
-            puts " creating #{name.join(' ')}"
-            Player.create :yahoo_id => id, :team_id => team.to_param, :first_name => name.first, :last_name => name.last
-          end
+        id_data = JSON.parse(open("https://sports.yahoo.com/site/api/resource/sports.alias;expected_entity=team;id=%2Fncaab%2Fteams%2F#{team.code}%2F").read)
+        team_id = id_data["teamdefault_league"].keys.first
+        data = JSON.parse(open("https://sports.yahoo.com/site/api/resource/sports.team.roster;id=#{team_id}").read)
+        data['players'].each do |k, val|
+          Player.create team_id: team.to_param, first_name: val['first_name'], last_name: val['last_name'], yahoo_id: val['player_id'].match(/\d+/)[0]
         end
       rescue => e
         puts "Caught exception finding all the players for #{team}: #{e}"
