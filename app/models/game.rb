@@ -10,43 +10,24 @@ class Game < ActiveRecord::Base
 
   def fetch_game_attributes
     Rails.logger.info "fetching game attributes for #{self.url}"
-    http_response = Net::HTTP.get_response(URI.parse(self.url))
-    http_response = Net::HTTP.get_response(URI.parse(http_response['location'] + '/')) if http_response.is_a? Net::HTTPRedirection
-    raise "ERROR: HTTP RESPONSE STATUS NOT 200: #{http_response.code} - #{http_response.body}" if http_response.code != '200'
-    response = Nokogiri::HTML(http_response.body)
-    away_team = response.search(".scrollingContainer a span")[0].text
-    home_team = response.search(".scrollingContainer a span")[2].text
-    self.away = Team.find_by(:name => away_team)
-    self.home = Team.find_by(:name => home_team)
-    return unless response.search('.scrollingContainer .team-score>div>div>span').count > 1
-    away_points = response.search('.scrollingContainer .team-score>div>div>span')[0].text
-    home_points = response.search('.scrollingContainer .team-score>div>div>span')[1].text
-    response.search('.player-stats table').first.search('tbody tr').each do |p|
-      parse_player(p, :away)
+    data = JSON.parse(open(url).read)
+    self.away = Team.find_by(yahoo_id: data['service']['boxscore']['game']['away_team_id'].match(/\d+/)[0])
+    self.home = Team.find_by(yahoo_id: data['service']['boxscore']['game']['home_team_id'].match(/\d+/)[0])
+    away_points = data['service']['boxscore']['game']['total_away_points'].to_i
+    home_points = data['service']['boxscore']['game']['total_home_points'].to_i
+    data['service']['boxscore']['player_stats'].each do |player, stat|
+      parse_player(player, stat)
     end
-    response.search('.player-stats table').last.search('tbody tr').each do |p|
-      parse_player(p, :home)
-    end
-    if response.search('.scrollingContainer').last.text.match(/Final/)
+    if data['service']['boxscore']['game']['status_type'] == 'status.type.final'
       self.is_final = true
       home_points > away_points ? self.away.update_attributes!(:eliminated => true) : self.home.update_attributes!(:eliminated => true)
     end
   end
 
   private
-  def parse_player p, team
-    player = find_or_create_player(p, team)
+  def parse_player p, stat
+    player = Player.find_by(:yahoo_id => p.match(/\d+/)[0])
     return unless player
-    create_boxscore player, p
-  end
-
-  def find_or_create_player player_data, team
-    Player.find_by(:yahoo_id => player_data.search('th a').attr('href').value.split('/').last)
-  rescue
-    return nil
-  end
-
-  def create_boxscore player, p
-    self.boxscores << Boxscore.create!(:player => player, :points => p.search('td').last.text.to_i)
+    self.boxscores << Boxscore.create!(:player => player, :points => stat['ncaab.stat_variation.2']['ncaab.stat_type.13'].to_i)
   end
 end

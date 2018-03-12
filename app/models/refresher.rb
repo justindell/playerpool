@@ -1,20 +1,18 @@
 require 'net/http'
 require 'uri'
 
-YAHOO_URL = 'http://sports.yahoo.com'
+BASE_URL = 'https://api-secure.sports.yahoo.com/v1/editorial/s/'
+YAHOO_URL = BASE_URL + 'scoreboard?leagues=ncaab&date='
 
 class Refresher
   def self.refresh date
-    Rails.logger.info "fetching response from #{YAHOO_URL}/college-basketball/scoreboard/?dateRange=#{date}"
-    http_response = Net::HTTP.get_response(URI.parse("#{YAHOO_URL}/college-basketball/scoreboard/?dateRange=#{date}"))
-    raise "ERROR: HTTP RESPONSE STATUS NOT 200: #{http_response.body}" if http_response.code != '200'
-    doc = Nokogiri::HTML(http_response.body)
-    doc.search('#scoreboard-group-2 li a').each do |game|
-      #next if game.attr('class').match(/pre/)
-      url = YAHOO_URL + game.attr('href')
-      game = Game.find_by_url url
+    Rails.logger.info "fetching response from #{YAHOO_URL}#{date}"
+    data = JSON.parse(open("#{YAHOO_URL}#{date}").read)
+    data['service']['scoreboard']['games'].each do |_, data|
+      full_url = BASE_URL + "boxscore/#{data['gameid']}"
+      game = Game.find_by_url full_url
       game.destroy if game && !game.is_final
-      Game.create(:url => url) if game.nil? || game.destroyed?
+      Game.create(url: full_url) if game.nil? || game.destroyed?
     end
   end
 end

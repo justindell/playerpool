@@ -26,7 +26,6 @@ namespace :data do
     Team.all.each do |team|
       begin
         puts "loading #{team}"
-        response = Net::HTTP.get_response(URI.parse("http://sports.yahoo.com/ncaa/basketball/teams/#{team.code}/roster"))
         id_data = JSON.parse(open("https://sports.yahoo.com/site/api/resource/sports.alias;expected_entity=team;id=%2Fncaab%2Fteams%2F#{team.code}%2F").read)
         team_id = id_data["teamdefault_league"].keys.first
         data = JSON.parse(open("https://sports.yahoo.com/site/api/resource/sports.team.roster;id=#{team_id}").read)
@@ -35,6 +34,20 @@ namespace :data do
         end
       rescue => e
         puts "Caught exception finding all the players for #{team}: #{e}"
+      end
+    end
+  end
+
+  desc 'add yahoo id to teams'
+  task :team_ids => :environment do
+    Team.all.each do |team|
+      begin
+        puts "loading #{team}"
+        id_data = JSON.parse(open("https://sports.yahoo.com/site/api/resource/sports.alias;expected_entity=team;id=%2Fncaab%2Fteams%2F#{team.code}%2F").read)
+        team_id = id_data["teamdefault_league"].keys.first.match(/\d+/)[0]
+        team.update_attributes! yahoo_id: team_id.to_i
+      rescue => e
+        puts "Caught exception finding id for #{team}: #{e}"
       end
     end
   end
