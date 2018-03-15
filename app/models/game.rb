@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
     self.home = Team.find_by(yahoo_id: data['service']['boxscore']['game']['home_team_id'].match(/\d+/)[0])
     away_points = data['service']['boxscore']['game']['total_away_points'].to_i
     home_points = data['service']['boxscore']['game']['total_home_points'].to_i
-    data['service']['boxscore']['player_stats'].each do |player, stat|
+    (data['service']['boxscore']['player_stats'] || []).each do |player, stat|
       parse_player(player, stat)
     end
     if data['service']['boxscore']['game']['status_type'] == 'status.type.final'
